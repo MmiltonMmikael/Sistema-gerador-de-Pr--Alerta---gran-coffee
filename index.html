@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gran Coffee - Sistema de Pré-Alertas</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="coffee-icon">☕</div>
+                <div>GRAN <span>COFFEE</span></div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Tela inicial -->
+            <div id="inicio">
+                <div class="card">
+                    <h1>Sistema de Pré-Alertas</h1>
+                    <p>Este sistema foi desenvolvido para facilitar a geração de pré-alertas para liberação de motoristas nas empresas clientes.</p>
+                    
+                    <h2>Como funciona:</h2>
+                    <p>1. Clique no botão "Fazer Pré-Alerta" abaixo</p>
+                    <p>2. Selecione o motorista e a data de entrega</p>
+                    <p>3. Opcionalmente, adicione números de pedido para GRUs</p>
+                    <p>4. Clique em "Gerar Pré-Alerta"</p>
+                    <p>5. O sistema irá gerar um e-mail formatado com todas as informações necessárias</p>
+                    <p>6. Copie o conteúdo e cole em seu e-mail no Outlook</p>
+                    
+                    <div class="actions">
+                        <button id="fazerPreAlerta" class="btn">Fazer Pré-Alerta</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tela de formulário -->
+            <div id="formulario" class="hidden">
+                <div class="card">
+                    <h1>Gerar Pré-Alerta</h1>
+                    
+                    <div class="form-group">
+                        <label for="motorista">Selecione o motorista:</label>
+                        <select id="motorista">
+                            <option value="">Selecione um motorista</option>
+                            <!-- Os motoristas serão adicionados via JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data">Data de entrega:</label>
+                        <input type="date" id="data" required>
+                    </div>
+
+                    <h3>Números de Pedido por GRU (Opcional)</h3>
+                    <div class="gru-inputs">
+                        <div class="gru-input-row">
+                            <div class="gru-label">GRU1:</div>
+                            <input type="text" class="gru-input" id="gru1" placeholder="Número do pedido">
+                        </div>
+                        <div class="gru-input-row">
+                            <div class="gru-label">GRU2:</div>
+                            <input type="text" class="gru-input" id="gru2" placeholder="Número do pedido">
+                        </div>
+                        <div class="gru-input-row">
+                            <div class="gru-label">GRU3:</div>
+                            <input type="text" class="gru-input" id="gru3" placeholder="Número do pedido">
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="voltar" class="btn back-btn">Voltar</button>
+                        <button id="gerarPreAlerta" class="btn">Gerar Pré-Alerta</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tela de resultado -->
+            <div id="resultado" class="hidden">
+                <div class="card">
+                    <h1>Pré-Alerta Gerado</h1>
+                    <p>Clique no botão "Copiar Conteúdo" abaixo e depois cole em seu e-mail no Outlook:</p>
+                    
+                    <div id="conteudoPreAlerta" class="pre-alerta">
+                        <div id="visualizacaoEmail">
+                            <!-- Visualização do e-mail -->
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="voltarInicio" class="btn back-btn">Voltar ao Início</button>
+                        <button id="copiarConteudo" class="btn">Copiar Conteúdo</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Gran Coffee &copy; 2025 - Sistema de Pré-Alertas. Diretrizes de Milton Mikael Cardoso</p>
+        </footer>
+
+        <div id="notification" class="notification">
+            Conteúdo copiado para a área de transferência!
+        </div>
+    </div>
+
+    <script>
+        // Dados dos motoristas (você pode adicionar/editar aqui)
+        const motoristas = [
+            {
+                id: 1,
+                nome: "MOTORISTA 1",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            },
+            {
+                id: 2,
+                nome: "MOTORISTA 2",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            },
+            {
+                id: 3,
+                nome: "MOTORISTA 3",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            },
+            {
+                id: 4,
+                nome: "MOTORISTA 4",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            },
+            {
+                id: 5,
+                nome: "MOTORISTA 5",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            },
+            {
+                id: 6,
+                nome: "MOTORISTA 6",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            },
+            {
+                id: 7,
+                nome: "MOTORISTA 7",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            },
+            {
+                id: 8,
+                nome: "MOTORISTA 8",
+                rg: "00.000.000",
+                cpf: "000.000.000-00",
+                placa: "AA12BB0",
+                veiculo: "FIORINO BRANCA",
+            }
+            
+            // Adicione mais motoristas conforme necessário
+        ];
+
+        // Elementos da DOM
+        const inicioSection = document.getElementById('inicio');
+        const formularioSection = document.getElementById('formulario');
+        const resultadoSection = document.getElementById('resultado');
+        const motoristaSelect = document.getElementById('motorista');
+        const dataInput = document.getElementById('data');
+        const gru1Input = document.getElementById('gru1');
+        const gru2Input = document.getElementById('gru2');
+        const gru3Input = document.getElementById('gru3');
+        const visualizacaoEmail = document.getElementById('visualizacaoEmail');
+        const copiarConteudoBtn = document.getElementById('copiarConteudo');
+        const notification = document.getElementById('notification');
+        
+        // Preencher select de motoristas
+        motoristas.forEach(motorista => {
+            const option = document.createElement('option');
+            option.value = motorista.id;
+            option.textContent = motorista.nome;
+            motoristaSelect.appendChild(option);
+        });
+        
+        // Configurar data mínima como amanhã
+        const amanha = new Date();
+        amanha.setDate(amanha.getDate() + 1);
+        dataInput.min = amanha.toISOString().split('T')[0];
+        
+        // Event Listeners
+        document.getElementById('fazerPreAlerta').addEventListener('click', () => {
+            inicioSection.classList.add('hidden');
+            formularioSection.classList.remove('hidden');
+        });
+        
+        document.getElementById('voltar').addEventListener('click', () => {
+            formularioSection.classList.add('hidden');
+            inicioSection.classList.remove('hidden');
+        });
+        
+        document.getElementById('voltarInicio').addEventListener('click', () => {
+            resultadoSection.classList.add('hidden');
+            inicioSection.classList.remove('hidden');
+        });
+        
+        document.getElementById('gerarPreAlerta').addEventListener('click', () => {
+            const motoristaId = motoristaSelect.value;
+            const data = dataInput.value;
+            
+            if (!motoristaId || !data) {
+                alert('Por favor, selecione um motorista e uma data.');
+                return;
+            }
+            
+            const motorista = motoristas.find(m => m.id == motoristaId);
+            const dataObj = new Date(data + 'T00:00:00');
+            const diasSemana = ['DOMINGO', 'SEGUNDA-FEIRA', 'TERÇA-FEIRA', 'QUARTA-FEIRA', 'QUINTA-FEIRA', 'SEXTA-FEIRA', 'SÁBADO'];
+            const diaSemana = diasSemana[dataObj.getDay()];
+            const dataFormatada = data.split('-').reverse().join('/');
+            
+            // Coletar números de pedido dos GRUs
+            const gruPedidos = [];
+            if (gru1Input.value.trim() !== '') {
+                gruPedidos.push({gru: 'GRU1', pedido: gru1Input.value.trim()});
+            }
+            if (gru2Input.value.trim() !== '') {
+                gruPedidos.push({gru: 'GRU2', pedido: gru2Input.value.trim()});
+            }
+            if (gru3Input.value.trim() !== '') {
+                gruPedidos.push({gru: 'GRU3', pedido: gru3Input.value.trim()});
+            }
+            
+            // Gerar o conteúdo do pré-alerta (versão formatada)
+            let emailContent = `
+                <p><strong>Boa tarde!</strong></p>
+                <p>Segue dados do motorista para liberação na portaria:</p>
+                <p><strong>Data:</strong> ${dataFormatada} - ${diaSemana}.</p>
+            `;
+            
+            // Adicionar informações dos GRUs se houver
+            if (gruPedidos.length > 0) {
+                emailContent += `
+                    <div class="gru-pedidos">
+                        <p><strong>Números de Pedido:</strong></p>
+                `;
+                
+                gruPedidos.forEach(item => {
+                    emailContent += `<div class="gru-item">${item.gru} - ${item.pedido}</div>`;
+                });
+                
+                emailContent += `</div>`;
+            }
+            
+            emailContent += `
+                <div class="tabela-compacta">
+                    <div class="linha-compacta"><span class="chave-compacta">Motorista:</span> ${motorista.nome}</div>
+                    <div class="linha-compacta"><span class="chave-compacta">RG:</span> ${motorista.rg}</div>
+                    <div class="linha-compacta"><span class="chave-compacta">CPF:</span> ${motorista.cpf}</div>
+                    <div class="linha-compacta"><span class="chave-compacta">Placa:</span> ${motorista.placa}</div>
+                    <div class="linha-compacta"><span class="chave-compacta">Veículo:</span> ${motorista.veiculo}</div>
+                </div>
+                <p><strong>Previsão de chegada:</strong> 8h00 às 17h00.</p>
+                <p>Atenciosamente,</p>
+            `;
+            
+            visualizacaoEmail.innerHTML = emailContent;
+            
+            formularioSection.classList.add('hidden');
+            resultadoSection.classList.remove('hidden');
+        });
+        
+        // Função para mostrar notificação
+        function showNotification() {
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Função para copiar conteúdo formatado
+        copiarConteudoBtn.addEventListener('click', async () => {
+            try {
+                // Coletar informações dos GRUs
+                let gruContent = '';
+                const gruElements = visualizacaoEmail.querySelectorAll('.gru-item');
+                if (gruElements.length > 0) {
+                    gruContent = '\n\nNúmeros de Pedido:\n';
+                    gruElements.forEach(el => {
+                        gruContent += el.textContent + '\n';
+                    });
+                }
+                
+                // Criar conteúdo HTML formatado para copiar
+                const htmlContent = `
+                    <div style="font-family: Arial, sans-serif; font-size: 13px; line-height: 1.4;">
+                        <p><strong>Boa tarde!</strong></p>
+                        <p>Segue dados do motorista para liberação na portaria:</p>
+                        <p><strong>Data:</strong> ${visualizacaoEmail.querySelector('p:nth-child(3) strong').nextSibling.textContent.trim()}</p>
+                        ${gruElements.length > 0 ? 
+                            `<div style="margin: 12px 0; padding: 10px; background-color: #f0f7ff; border-radius: 4px; border-left: 3px solid #2196F3;">
+                                <p><strong>Números de Pedido:</strong></p>
+                                ${Array.from(gruElements).map(el => `<div style="margin-bottom: 5px; padding: 3px 0;">${el.textContent}</div>`).join('')}
+                            </div>` : ''}
+                        <div style="margin: 12px 0; padding: 10px; background-color: #f9f9f9; border-radius: 4px; border-left: 3px solid #2e7d32; font-size: 11px;">
+                            ${Array.from(visualizacaoEmail.querySelectorAll('.linha-compacta')).map(linha => linha.outerHTML).join('')}
+                        </div>
+                        <p><strong>Previsão de chegada:</strong> 8h00 às 17h00.</p>
+                        <p>Atenciosamente,</p>
+                    </div>
+                `;
+                
+                // Criar versão em texto simples como fallback
+                const plainText = `Boa tarde!\n\nSegue dados do motorista para liberação na portaria:\n\nData: ${visualizacaoEmail.querySelector('p:nth-child(3)').textContent.replace('Data: ', '')}${gruContent}\n${Array.from(visualizacaoEmail.querySelectorAll('.linha-compacta')).map(linha => linha.textContent).join('\n')}\n\nPrevisão de chegada: 8h00 às 17h00.\n\nAtenciosamente,`;
+                
+                // Usar a API Clipboard para copiar tanto HTML quanto texto
+                const blob = new Blob([htmlContent], {type: 'text/html'});
+                const plainBlob = new Blob([plainText], {type: 'text/plain'});
+                
+                const data = [new ClipboardItem({
+                    'text/html': blob,
+                    'text/plain': plainBlob
+                })];
+                
+                await navigator.clipboard.write(data);
+                showNotification();
+            } catch (err) {
+                console.error('Falha ao copiar conteúdo formatado: ', err);
+                
+                // Fallback: copiar apenas texto simples
+                try {
+                    // Coletar informações dos GRUs
+                    let gruContent = '';
+                    const gruElements = visualizacaoEmail.querySelectorAll('.gru-item');
+                    if (gruElements.length > 0) {
+                        gruContent = '\n\nNúmeros de Pedido:\n';
+                        gruElements.forEach(el => {
+                            gruContent += el.textContent + '\n';
+                        });
+                    }
+                    
+                    const plainText = `Boa tarde!\n\nSegue dados do motorista para liberação na portaria:\n\nData: ${visualizacaoEmail.querySelector('p:nth-child(3)').textContent.replace('Data: ', '')}${gruContent}\n${Array.from(visualizacaoEmail.querySelectorAll('.linha-compacta')).map(linha => linha.textContent).join('\n')}\n\nPrevisão de chegada: 8h00 às 17h00.\n\nAtenciosamente,`;
+                    await navigator.clipboard.writeText(plainText);
+                    showNotification();
+                } catch (err2) {
+                    console.error('Falha ao copiar texto simples: ', err2);
+                    alert('Erro ao copiar. Por favor, selecione e copie o conteúdo manualmente.');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

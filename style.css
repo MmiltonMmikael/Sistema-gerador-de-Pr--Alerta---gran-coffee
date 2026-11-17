@@ -1,0 +1,253 @@
+:root {
+    --verde: #2e7d32;
+    --verde-claro: #4caf50;
+    --preto: #333333;
+    --branco: #ffffff;
+    --cinza: #f5f5f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--cinza);
+    color: var(--preto);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--verde);
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--verde);
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    color: var(--preto);
+}
+
+.coffee-icon {
+    margin-right: 8px;
+    font-size: 24px;
+}
+
+.card {
+    background-color: var(--branco);
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: var(--verde);
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+
+h2 {
+    color: var(--verde);
+    margin: 15px 0 12px;
+    font-size: 18px;
+}
+
+h3 {
+    color: var(--verde);
+    margin: 15px 0 8px;
+    font-size: 16px;
+}
+
+p {
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.btn {
+    background-color: var(--verde);
+    color: var(--branco);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: var(--verde-claro);
+}
+
+.btn-secondary {
+    background-color: #666;
+    color: var(--branco);
+}
+
+.btn-secondary:hover {
+    background-color: #888;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: var(--preto);
+    font-size: 14px;
+}
+
+select, input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.pre-alerta {
+    background-color: var(--branco);
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
+    font-size: 13px;
+}
+
+#visualizacaoEmail {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px dashed #ccc;
+    background-color: #f9f9f9;
+}
+
+.tabela-compacta {
+    margin: 12px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border-left: 3px solid var(--verde);
+    font-size: 11px; /* Fonte ainda menor */
+}
+
+.linha-compacta {
+    margin-bottom: 5px;
+    padding: 3px 0;
+    display: flex;
+}
+
+.chave-compacta {
+    font-weight: bold;
+    display: inline-block;
+    width: 70px;
+    color: var(--verde);
+    flex-shrink: 0;
+}
+
+.gru-pedidos {
+    margin: 12px 0;
+    padding: 10px;
+    background-color: #f0f7ff;
+    border-radius: 4px;
+    border-left: 3px solid #2e7d32;
+}
+
+.gru-item {
+    margin-bottom: 5px;
+    padding: 3px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.back-btn {
+    background-color: #666;
+    margin-right: 8px;
+}
+
+.back-btn:hover {
+    background-color: #888;
+}
+
+.actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.gru-inputs {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.gru-input-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.gru-label {
+    width: 50px;
+    font-weight: bold;
+}
+
+.gru-input {
+    flex: 1;
+    margin-right: 8px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    color: #666;
+    border-top: 1px solid #ddd;
+    font-size: 12px;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    background-color: var(--verde);
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.notification.show {
+    opacity: 1;
+}
